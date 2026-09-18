@@ -41,11 +41,4 @@ test.describe('Forgot password page', () => {
     const loginPage = new LoginPage(page);
     await expect(loginPage.emailInput).toBeVisible();
   });
-
-  // Deliberately not automated here — needs a real inbox (or a mailbox API
-  // like Mailosaur/Ethereal) to retrieve the reset link, plus a way to
-  // fast-forward or wait out its expiry window:
-  test.fixme('reset link is single-use and rejects a second click', async () => { });
-  test.fixme('reset link expires after its stated window', async () => { });
-  test.fixme('setting a new password via the link invalidates the old password', async () => { });
 });

@@ -128,17 +128,6 @@ test.describe('Login page', () => {
       // The field's value is retained (not cleared) after a failed attempt.
       await expect(loginPage.passwordInput).toHaveValue('wrongpassword123');
     });*/
-
-    // Deliberately NOT automated: hammering the real login endpoint with
-    // repeated failed attempts to probe rate-limiting/lockout behavior
-    // against a shared staging environment without coordinating first.
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.fixme(
-      'repeated rapid failed attempts trigger rate limiting / lockout messaging',
-      async () => {
-        // Coordinate with the team before enabling this against staging.
-      }
-    );
   });
 
   test.describe('4. Password field behavior', () => {
@@ -192,16 +181,6 @@ test.describe('Login page', () => {
 
       expect(popupOrNav).not.toBeNull();
     });
-
-    test.fixme(
-      'signing in with a Google account matching an existing HOA Workflow account logs in',
-      async () => {
-        // Requires a real Google test account wired up via a dedicated
-        // OAuth test harness (e.g. a pre-authenticated storageState) —
-        // out of scope for a plain Playwright script against the live
-        // Google login form.
-      }
-    );
   });
 
   test.describe('6. Forgot password entry point', () => {
