@@ -80,6 +80,17 @@ export default defineConfig({
     name: 'chromium',
     use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/user.json' },
     dependencies: ['setup'],
+    // The @mobile-375 test runs only under the mobile-chrome-375 project below.
+    grepInvert: /@mobile-375/,
+  },
+  {
+    name: 'mobile-chrome-375',
+    // Only pick up tests explicitly tagged for this viewport.
+    grep: /@mobile-375/,
+    use: {
+      ...devices['Pixel 5'],
+      viewport: { width: 375, height: 667 },
+    },
   },
 ],
 

@@ -114,20 +114,6 @@ test.describe('Login page', () => {
       await loginPage.login(UNKNOWN_USER_EMAIL, 'whatever-password-123');
       await loginPage.expectIncorrectCredentialsError();
     });
-
-    /*test('password field re-masks after a failed attempt even if it was shown before submit', async () => {
-      await loginPage.fillEmail(UNKNOWN_USER_EMAIL);
-      await loginPage.fillPassword('wrongpassword123');
-      await loginPage.togglePasswordVisibility();
-      expect(await loginPage.isPasswordVisible()).toBe(true);
-
-      await loginPage.submit();
-      await loginPage.expectIncorrectCredentialsError();
-
-      expect(await loginPage.isPasswordVisible()).toBe(false);
-      // The field's value is retained (not cleared) after a failed attempt.
-      await expect(loginPage.passwordInput).toHaveValue('wrongpassword123');
-    });*/
   });
 
   test.describe('4. Password field behavior', () => {
@@ -153,15 +139,6 @@ test.describe('Login page', () => {
       expect(await loginPage.isPasswordVisible()).toBe(true);
       await expect(loginPage.togglePasswordButton).toHaveAttribute('aria-label', 'Show password');
     });
-
-    /*test('toggle resets to hidden after a failed submit', async () => {
-      await loginPage.fillEmail(UNKNOWN_USER_EMAIL);
-      await loginPage.fillPassword('wrongpassword123');
-      await loginPage.togglePasswordVisibility();
-      await loginPage.submit();
-      await loginPage.expectIncorrectCredentialsError();
-      expect(await loginPage.isPasswordVisible()).toBe(false);
-    });*/
   });
 
   test.describe('5. Google SSO', () => {
@@ -189,18 +166,6 @@ test.describe('Login page', () => {
       await expect(page).toHaveURL(/\/forgot-password/);
     });
   });
-
-  /*test.describe('7. Session & security', () => {
-    test('visiting /login while already authenticated redirects away', async ({ page }) => {
-      test.skip(!hasRealCredentials, 'Requires TEST_USER_EMAIL / TEST_USER_PASSWORD in .env');
-
-      await loginPage.login(TEST_USER_EMAIL, TEST_USER_PASSWORD);
-      await loginPage.expectLoggedIn();
-
-      await loginPage.goto();
-      await expect(page).not.toHaveURL(/\/login$/);
-    });
-  });*/
 
   test.describe('10. Accessibility', () => {
     test('tab order moves Email -> Password -> toggle -> Sign in', async ({ page }) => {
@@ -240,9 +205,10 @@ test.describe('Login page', () => {
 });
 
 // Run a subset of the most important checks at a 375px mobile viewport.
-// (See playwright.config.ts "mobile-chrome-375" project — run with
-// `npx playwright test --project=mobile-chrome-375`.)
-test.describe('9. Mobile layout (375px)', () => {
+// Tagged @mobile-375 so it only runs under the "mobile-chrome-375" project
+// (see playwright.config.ts) and is excluded from the desktop "chromium"
+// project, instead of silently running at desktop width under both.
+test.describe('9. Mobile layout (375px) @mobile-375', () => {
   test('form controls are visible without horizontal scroll', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
